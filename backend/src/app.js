@@ -14,5 +14,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+import adminRouter from './routes/admin.routes.js'
+app.use("/api/v1/admin", adminRouter)
 
 export {app}
