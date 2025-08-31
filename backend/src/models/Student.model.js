@@ -88,12 +88,12 @@ const StudentSchema = new Schema(
         password: {
             type: String,
             required: true,
-            lowercase: true,
             trim: true,
         },
         isverified: {
             type: Boolean,
             required: true,
+            default:false
         },
         id: {
             type: String,
@@ -184,7 +184,7 @@ const StudentSchema = new Schema(
         },
 
         //All Documents
-        prev_equi_cert: {
+        pre_equi_cert: {
             url: {
                 type: String,
                 required: true,
@@ -245,23 +245,23 @@ const StudentSchema = new Schema(
     }
 )
 
-userSchema.pre("save", async function (next) {
+StudentSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
 
     this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
-userSchema.methods.isPasswordCorrect = async function (password) {
+StudentSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
 
-userSchema.methods.generateAccessToken = function () {
+StudentSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
             _id: this._id,
             email: this.email,
-            phone: this.phone,
+            student_phone: this.student_phone,
             collegeCode: this.collegeCode
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -270,7 +270,7 @@ userSchema.methods.generateAccessToken = function () {
         }
     )
 }
-userSchema.methods.generateRefreshToken = function () {
+StudentSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,
