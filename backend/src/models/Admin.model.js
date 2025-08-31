@@ -126,11 +126,12 @@ const adminSchema = new Schema(
     },
 
     staff_selection_id: {
-      administrative: { type: Number, default: 10297145 },
-      Teacher: { type: Number, default: 726800 },
-      student: { type: Number, default: 234567 },
-      fee_section: { type: Number, default: 5684525 },
-    },
+    administrativecode: { type: String, default: "726800" },
+    Teacher: { type: String, default: "726800" },
+    student: { type: String, default: "234567" },
+    fee_section: { type: String, default: "5684525" },
+  },
+
   },
   {
     timestamps: true,
@@ -172,7 +173,6 @@ adminSchema.methods.generateRefreshToken = function () {
     }
   );
 };
-
 export const Admin = mongoose.model("Admin", adminSchema);
 
 

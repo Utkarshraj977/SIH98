@@ -52,6 +52,5 @@ router.route("/update-college-certificate").patch(verifyJWT, upload.fields([
 ])
     , updateCollegeCertificate)
 
-
 export default router
 

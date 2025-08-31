@@ -21,7 +21,6 @@ const generateAccessAndRefereshTokens = async (userId) => {
   }
 }
 
-
 const registerAdmin = asyncHandler(async (req, res) => {
   const { collegeName, collegeCode, venue, state, collegeRegnum, Institute_Type, name, email, phone, age, password, blood_group } = req.body;
 
@@ -173,6 +172,8 @@ const registerAdmin = asyncHandler(async (req, res) => {
       )
     );
 });
+
+
 
 const loginAdmin = asyncHandler(async (req, res) => {
 
