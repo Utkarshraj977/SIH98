@@ -67,6 +67,32 @@ export const verifyJWTStudent = asyncHandler(async (req, _, next) => {
     }
 });
 
+export const verifyJWT1 = asyncHandler(async(req, _, next) => {
+    try {
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
+        
+        // console.log(token);
+        if (!token) {
+            throw new ApiError(401, "Unauthorized request")
+        }
+    
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    
+        const Adminn = await Administrative.findById(decodedToken?._id).select("-password -refreshToken")
+    
+        if (!Adminn) {
+            
+            throw new ApiError(401, "Invalid Access Token")
+        }
+    
+        req.Administrative = Adminn;
+        next()
+    } catch (error) {
+        throw new ApiError(401, error?.message || "Invalid access token")
+    }
+    
+})
+
 export const verifyJWT2 = asyncHandler(async (req, _, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")

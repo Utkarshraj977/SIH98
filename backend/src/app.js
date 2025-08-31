@@ -21,7 +21,5 @@ import feeSection from './routes/feeSection.routes.js'
 app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/administrativeOfficer", administrativeOfficer)
 app.use("/api/v1/feeSection", feeSection)
-
-app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/student",studentRouter)
 export {app}
