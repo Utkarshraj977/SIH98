@@ -28,7 +28,7 @@ const StudentSchema = new Schema(
             }
         },
         DOB: {
-            type: Date,
+            type: String,
             required: true,
         },
         sex: {
@@ -283,3 +283,5 @@ userSchema.methods.generateRefreshToken = function () {
     )
 }
 export const Student = mongoose.model("Student", StudentSchema)
+
+
