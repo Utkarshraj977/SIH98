@@ -15,6 +15,10 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 import adminRouter from './routes/admin.routes.js'
+import administrativeOfficer from './routes/administrativeOfficer.routes.js'
+import feeSection from './routes/feeSection.routes.js'
 app.use("/api/v1/admin", adminRouter)
+app.use("/api/v1/administrativeOfficer", administrativeOfficer)
+app.use("/api/v1/feeSection", feeSection)
 
 export {app}
