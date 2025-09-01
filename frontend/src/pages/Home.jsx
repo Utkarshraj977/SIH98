@@ -10,7 +10,7 @@ const Home = () => {
       <div className="home">
      <div className="homeContainer grid gap-2 sm:grid-cols-2">
       <div className="left">
-          <div className="text">
+          <div className="text text-black">
             <div className=''>
               <h1 className='text-6xl'>
                   One <span className=' font-bold'>Platform</span>, Total Control
