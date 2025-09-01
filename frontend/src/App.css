@@ -1,42 +1,234 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import "tailwindcss";
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+.header{
+    height:15vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+nav{
+    
+    width:94vw;
+    min-height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(
+    90deg,
+    #5B21B6,  /* Dark Purple Start */
+    #A78BFA,  /* Light Purple Middle */
+    #6D28D9   /* Dark Purple End */
+  );
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  color: WHITE;
+  text-decoration: none;
+  padding-bottom: 4px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #FBBF24;
+}
+
+.nav-links a.active-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 3px;
+  background: #FBBF24;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+nav .links ul{
+    display: flex;
+    gap: 1rem;
+    color: white;
+}
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+  display: flex;
+  gap: 10px;
+ 
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.logo h1{
+    color: white;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.std-icn{
+    padding-top: 6px;
+     color: #FACC15;
+}
+ .menu-icn{
+    display: none;
+    color: white;
+    
+}
+.home{
+    background-color: #DDF4E7;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+.homeContainer{
+    min-height: 100vh;
+    width: 90vw;
+    gap: 30px;
+   
+    
+}
+.aboutContainer{
+    min-height: 100vh;
+    width: 100vw;
+    
+}
+.text{
+    margin-top: 22%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+.text h1{
+    font-weight: 500;
+    
+}
+.text span{
+  color:  #5B21B6
+}
+.text button{
+    padding: 10px 50px;
+    background: #5B21B6;
+    color: white;
+    font-weight: 400;
+    border-radius: 6px;
+    cursor: pointer;
+    
+}
+.text button:hover{
+    background-color: #F74A05;
+}
+.homeContainer .right{
+    margin-top: 10vh;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cardContainer{
+    display: flex;
+    gap: 10px;
+}
+#entry{
+    
+    display: flex;
+    justify-content: center;
+}
+.entryContainer{
+    
+    width: 90vw;
+    padding: 20px;
+}
+.entryContainer div{
+    border-radius: 5px;
+}
+.footer-container{
+    padding: 20px;
+}
+.footer-container div{
+    text-align: center;
+}
+.footer-container .social{
+    gap: 30px;
+    margin-top: 5%;
+
+}
+.sign{
+    background-color: rgb(218, 211, 211);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+   
+}
+.signup form{
+    
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+}
+.signup form input{
+    padding: 4px;
+    font-size: 23px;
+    border: 1px solid black;
+}
+.signup form button{
+    padding: 5px 30px;
+}
+.admin-reg{
+    padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+
+@media (max-width: 768px){
+    .links{
+        z-index: 99;
+        background-color:rgb(192, 97, 97);
+        position: absolute;
+        left: 0;
+        width: 100vw;
+        padding: 30px;
+        top:5px;
+        transition: 0.6s  ease-in-out;
+        border-radius: 0px 0px 50px 0px;
+
+    }
+    .links ul{
+        flex-direction: column;
+        width: 50%;
+        height: 400px;
+    }
+    .text{
+        text-align: center;
+    }
+    .text span{
+        color: ;
+    }
+    .text .start-btn{
+        display: flex;
+        justify-content: center;
+    }
+    .footer-container{
+        align-items: center;
+        justify-content: center;
+    }
+    .menu-icn{
+      display: block;
+      z-index: 999;
+    }
+    .sign{
+   
+    width: 90%;
 }
 
-.card {
-  padding: 2em;
+
 }
 
-.read-the-docs {
-  color: #888;
-}
+
