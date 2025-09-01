@@ -1,0 +1,184 @@
+/* App.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.app-container {
+  max-width: 1200px;
+  width: 100%; /* 👈 ensures no overflow */
+  margin: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.form-title {
+  text-align: center;
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.form-subtitle {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-section {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-section.right {
+  background: #3d2f2f;
+}
+
+.form-section.bottom {
+  grid-column: span 2;
+}
+
+.form-section h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 2px solid #06b6d4;
+  padding-bottom: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* 👈 prevents overflow */
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background: #111;
+  color: white;
+  width: 100%; /* 👈 responsive input */
+  box-sizing: border-box;
+}
+
+input[readonly] {
+  background: #222;
+}
+
+.file-upload {
+  margin-top: 15px;
+}
+
+.file-upload label {
+  font-weight: bold;
+}
+
+.upload-box {
+  border: 2px dashed #666;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  background: #111;
+}
+
+.upload-box input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.upload-box i {
+  font-size: 30px;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.upload-box.drag-over {
+  background: #222;
+  border-color: #06b6d4;
+}
+
+.form-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.submit-btn {
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 🔥 Responsive Layout */
+@media (max-width: 992px) {
+  .form-grid {
+    grid-template-columns: 1fr; /* stack sections */
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .form-title {
+    font-size: 20px;
+    padding: 15px;
+  }
+
+  .form-subtitle {
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    width: 100%; /* full width on phone */
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  input,
+  select {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
