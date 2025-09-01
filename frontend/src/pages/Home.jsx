@@ -37,7 +37,7 @@ const Home = () => {
   </div>
        <div id='entry'>
         <div className="entryContainer grid gap-1.5 sm:grid-cols-3">
-            <div className='bg-amber-300 h-[15vh]  flex items-center justify-center' onClick={()=>navigate("signup")}><h1>Admin</h1></div>
+            <div className='bg-amber-300 h-[15vh]  flex items-center justify-center' onClick={()=>navigate("register")}><h1>Admin</h1></div>
             <div className='bg-amber-600 h-[15vh]  flex items-center justify-center'><h1>Staff</h1></div>
             <div className='bg-gray-500 h-[15vh]   flex items-center justify-center'><h1>Teacher</h1></div>
            

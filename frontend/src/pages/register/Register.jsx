@@ -5,9 +5,9 @@ const Register = () => {
   return (
     <>
       <Detail/>
-      <FileUpload/>
     </>
   )
 }
 
 export default Register
+

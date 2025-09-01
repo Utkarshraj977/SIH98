@@ -1,38 +1,50 @@
-import {v2 as cloudinary} from "cloudinary"
-import fs from "fs"
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
-
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-  api_key: process.env.CLOUDINARY_API_KEY, 
-  api_secret: process.env.CLOUDINARY_API_SECRET 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const uploadOnCloudinary = async (localFilePath) => {
-    try {
-        console.log("🔍 Cloudinary config:", cloudinary.config());
+  try {
+    if (!localFilePath) return null;
 
-        if (!localFilePath) return null;
+    // ✅ Absolute path bana lo (safe delete ke liye)
+    const absolutePath = path.resolve(localFilePath);
 
-        const response = await cloudinary.uploader.upload(localFilePath, {
-            resource_type: "auto"
-        });
+    const response = await cloudinary.uploader.upload(absolutePath, {
+      resource_type: "auto",
+    });
 
-        console.log("🟢 File uploaded: ", response.secure_url);
+    console.log("🟢 File uploaded: ", response.secure_url);
 
-        fs.unlinkSync(localFilePath);
-        return response;
+    // ✅ Delete after upload
+    fs.unlink(absolutePath, (err) => {
+      if (err) {
+        console.error("⚠️ File delete error:", err.message);
+      } else {
+        console.log("🗑️ Temp file deleted:", absolutePath);
+      }
+    });
 
-    } catch (error) {
-        console.log("🔴 Cloudinary upload error:", error.message);
-        if (fs.existsSync(localFilePath)) {
-            fs.unlinkSync(localFilePath);
-        }
-        return null;
+    return response;
+  } catch (error) {
+    console.error("🔴 Cloudinary upload error:", error.message);
+
+    // Error aaya to bhi file delete karo
+    if (localFilePath && fs.existsSync(localFilePath)) {
+      fs.unlink(localFilePath, (err) => {
+        if (err) console.error("⚠️ File delete error:", err.message);
+      });
     }
+
+    return null;
+  }
 };
 
-
-export {uploadOnCloudinary}
+export { uploadOnCloudinary };
