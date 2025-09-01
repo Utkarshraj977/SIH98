@@ -1,0 +1,33 @@
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 900px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn.primary {
+  background: #facc15;
+  color: #111;
+  font-weight: bold;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.primary:hover {
+  background: #fbbf24;
+}

@@ -1,0 +1,121 @@
+/* About Page Container */
+.about {
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 1100px;
+  margin: auto;
+  background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+  border-radius: 16px;
+}
+
+/* Heading */
+.about h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #4f46e5;
+  font-weight: 700;
+}
+
+/* Intro Paragraph */
+.about p {
+  font-size: 1.15rem;
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  color: #374151;
+}
+
+/* Feature Cards Section */
+.features {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background: #ffffff;
+  flex: 1;
+  min-width: 250px;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(20, 20, 20, 0.15);
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: #4f46e5;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Images Section */
+.about-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.about-images img {
+  width: 45%;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.about-images img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* Mission Section */
+.mission h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #4f46e5;
+}
+
+.mission p {
+  font-size: 1.1rem;
+  color: #374151;
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.7;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-images img {
+    width: 100%;
+  }
+
+  /* Hide Navbar links/buttons on mobile */
+  .about .nav-links,
+  .about .auth-buttons {
+    display: none !important;
+  }
+
+  .about {
+    padding: 2rem 1rem;
+  }
+}
