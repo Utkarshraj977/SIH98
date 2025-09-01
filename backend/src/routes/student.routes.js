@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
-    registerStudent,loginStudent,logoutStudent
+    registerStudent,loginStudent,logoutStudent,getCurrentUser,getlatestmess,changeCurrentPassword,updateStudentAvatar,
+    allAdmittedStudent,allUnAdmittedStudent,allStudentBysem,allStudentBycourse,allDeptStudent
 } from "../controllers/student.controller.js";
 import { upload } from "../middlewares/multer.middleware.js"
 import { verifyJWTStudent } from "../middlewares/auth.middleware.js";
@@ -40,17 +41,21 @@ router.route("/register").post(
 
 router.route("/login").post(loginStudent)
 router.route("/logout").post(verifyJWTStudent, logoutStudent)
-// router.route("/change-password").post(verifyJWT, changeCurrentPassword)
-// router.route("/current-user").get(verifyJWT, getCurrentUser)
-// router.route("/update-account").patch(verifyJWT, updateAccountDetails)
-// router.route("/update-avatar").patch(verifyJWT, upload.single("avatar"), updateAdminAvatar)
-// router.route("/update-college-certificate").patch(verifyJWT, upload.fields([
-//     { name: "AICTE", maxCount: 1 },
-//     { name: "NAAC", maxCount: 1 },
-//     { name: "NBA", maxCount: 1 },
-// ])
-//     , updateCollegeCertificate)
+router.route("/change-password").post(verifyJWTStudent, changeCurrentPassword)
+
+router.route("/current-user").get(verifyJWTStudent, getCurrentUser)
+router.route("/getlatestmess").get(verifyJWTStudent, getlatestmess)
+router.route("/allAdmittedStudent").get(verifyJWTStudent, allAdmittedStudent)
+router.route("/allUnAdmittedStudent").get(verifyJWTStudent, allUnAdmittedStudent)
+router.route("/allUnAdmittedStudent").get(verifyJWTStudent, allUnAdmittedStudent)
+
+router.route("/allStudentBysem/:sem").get(verifyJWTStudent, allStudentBysem)
+router.route("/allStudentBycourse/:course").get(verifyJWTStudent, allStudentBycourse)
+router.route("/allDeptStudent/:dept").get(verifyJWTStudent, allDeptStudent)
+
+router.route("/update-avatar").patch(verifyJWTStudent, upload.single("avatar"), updateStudentAvatar)
 
 
 export default router
+
 

@@ -90,11 +90,7 @@ const StudentSchema = new Schema(
             required: true,
             trim: true,
         },
-        isverified: {
-            type: Boolean,
-            required: true,
-            default:false
-        },
+
         id: {
             type: String,
             lowercase: true,
@@ -119,13 +115,7 @@ const StudentSchema = new Schema(
             lowercase: true,
             trim: true,
         },
-        certificate: [
-            {
-                type: String,
-                lowercase: true,
-                trim: true,
-            }
-        ],
+
 
         //Acedmic Details
         prev_School_name: {
@@ -234,8 +224,45 @@ const StudentSchema = new Schema(
                 required: true,
             }
         },
-       
-
+        //After Admission
+ //Attendence and Hostel Details is also created in future
+        result:[
+            {
+                sem:{type:"String",required:true},
+                marks:{type:Number,default:0}
+            }
+        ],
+        message: [
+            {
+                type: String,
+                date: { type: Date, default: Date.now }   // store timestamp for filtering
+            }
+        ],
+        sem_fee: [
+            {
+                sem: { type: String, required: true },     // e.g., "1st", "2nd"
+                paid: { type: Boolean, default: false },   // paid/unpaid
+                amountPaid: { type: Number, default: 0 },  // how much paid
+                dueAmount: { type: Number, default: 0 },   // optional: how much still due
+                dateOfPayment: { type: Date }              // when payment done
+            }
+        ],
+        certificate: [
+            {
+                type: String,
+                lowercase: true,
+                trim: true,
+            }
+        ],
+        isverified: {
+            type: Boolean,
+            default: false,
+        },
+        sem:{
+            type:Number,
+            required:false,
+            default:"1"
+        },
         refreshToken: {
             type: String
         },

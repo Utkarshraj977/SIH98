@@ -173,8 +173,6 @@ const registerAdmin = asyncHandler(async (req, res) => {
     );
 });
 
-
-
 const loginAdmin = asyncHandler(async (req, res) => {
 
   const { email, phone, password } = req.body
@@ -415,6 +413,8 @@ const updateCollegeCertificate = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedUser, "Certificates updated successfully"));
 
 });
+
+
 
 export {
   registerAdmin, loginAdmin, logoutAdmin, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateAdminAvatar

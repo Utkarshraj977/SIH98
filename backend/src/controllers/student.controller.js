@@ -21,7 +21,6 @@ const generateAccessAndRefereshTokens = async (userId) => {
     }
 }
 
-
 const registerStudent = asyncHandler(async (req, res) => {
     const { name, email, DOB, sex, bloodgroup, fathername, mothername, student_phone, father_phone,
         father_email, curr_address, permanent_address, password, isverified, id, course, stream, collegeCode,
@@ -89,7 +88,7 @@ const registerStudent = asyncHandler(async (req, res) => {
     if (!prev_equi_rank_card) {
         throw new ApiError(400, "pre Equivalent Rank certificate upload failed");
     }
-     const father_aadhar_card = await uploadOnCloudinary(father_aadhar_cardPath);
+    const father_aadhar_card = await uploadOnCloudinary(father_aadhar_cardPath);
     if (!father_aadhar_card) {
         throw new ApiError(400, "father aadhar card certificate upload failed");
     }
@@ -104,10 +103,10 @@ const registerStudent = asyncHandler(async (req, res) => {
 
 
     const created = await Student.create({
-        name, email, DOB, sex, bloodgroup, fathername, mothername, student_phone, father_phone,isverified,
-            father_email, curr_address, permanent_address, password, course, stream, collegeCode,
-            prev_School_name, school_address, prev_equivalent_class, prev_equivalent_board, prev_equivalent_marks,
-            prev_equivalent_marks_percent, appearIn, rankIn_comp, marksIn_comp,
+        name, email, DOB, sex, bloodgroup, fathername, mothername, student_phone, father_phone, isverified,
+        father_email, curr_address, permanent_address, password, course, stream, collegeCode,
+        prev_School_name, school_address, prev_equivalent_class, prev_equivalent_board, prev_equivalent_marks,
+        prev_equivalent_marks_percent, appearIn, rankIn_comp, marksIn_comp,
         avatar: {
             url: avatar?.url || "",
             public_id: avatar?.public_id || "",
@@ -154,82 +153,223 @@ const registerStudent = asyncHandler(async (req, res) => {
 });
 
 const loginStudent = asyncHandler(async (req, res) => {
-  let { email, student_phone, password } = req.body;
+    let { email, student_phone, password } = req.body;
 
-  // Validate required fields
-  if ((!email && !student_phone) || !password) {
-    throw new ApiError(400, "Email or student phone AND password are required");
-  }
+    // Validate required fields
+    if ((!email && !student_phone) || !password) {
+        throw new ApiError(400, "Email or student phone AND password are required");
+    }
 
-  // Find student by email or phone
-  const studentuser = await Student.findOne({
-    $or: [{ student_phone }, { email }]
-  });
-console.log(studentuser);
-  if (!studentuser) {
-    throw new ApiError(404, "Student does not exist");
-  }
+    // Find student by email or phone
+    const studentuser = await Student.findOne({
+        $or: [{ student_phone }, { email }]
+    });
 
-  const isPasswordValid = await studentuser.isPasswordCorrect(password);
-  console.log("isPasswordValid:", isPasswordValid);
+    if (!studentuser) {
+        throw new ApiError(404, "Student does not exist");
+    }
 
-  if (!isPasswordValid) {
-    throw new ApiError(401, "Invalid student credentials");
-  }
+    const isPasswordValid = await studentuser.isPasswordCorrect(password);
+    console.log("isPasswordValid:", isPasswordValid);
 
-  // Generate tokens
-  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(studentuser._id);
+    if (!isPasswordValid) {
+        throw new ApiError(401, "Invalid student credentials");
+    }
 
-  // Return user without sensitive fields
-  const loggedInstudentuser = await Student.findById(studentuser._id)
-    .select("-password -refreshToken -accessToken");
+    // Generate tokens
+    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(studentuser._id);
 
-  const options = {
-    httpOnly: true,
-    secure: true
-  };
+    // Return user without sensitive fields
+    const loggedInstudentuser = await Student.findById(studentuser._id)
+        .select("-password -refreshToken -accessToken");
 
-  return res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-      new ApiResponse(
-        200,
-        {
-          user: loggedInstudentuser,
-          accessToken,
-          refreshToken
-        },
-        "Student logged in successfully"
-      )
-    );
+    const options = {
+        httpOnly: true,
+        secure: true
+    };
+
+    return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(
+                200,
+                {
+                    user: loggedInstudentuser,
+                    accessToken,
+                    refreshToken
+                },
+                "Student logged in successfully"
+            )
+        );
 });
 
 const logoutStudent = asyncHandler(async (req, res) => {
-  await Student.findByIdAndUpdate(
-    req.Student._id,
-    {
-      $unset: {
-        refreshToken: 1 // this removes the field from document
-      }
-    },
-    {
-      new: true
+    await Student.findByIdAndUpdate(
+        req.Student._id,
+        {
+            $unset: {
+                refreshToken: 1 // this removes the field from document
+            }
+        },
+        {
+            new: true
+        }
+    )
+
+    const options = {
+        httpOnly: true,
+        secure: true
     }
-  )
 
-  const options = {
-    httpOnly: true,
-    secure: true
-  }
-
-  return res
-    .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, {}, "Student logged Out"))
+    return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(new ApiResponse(200, {}, "Student logged Out"))
 })
 
-export {registerStudent,loginStudent,logoutStudent }
+const getCurrentUser = asyncHandler(async (req, res) => {
+
+    return res
+        .status(200)
+        .json(new ApiResponse(
+            200,
+            req.Student,
+            "Student User fetched successfully"
+        ))
+})
+
+const getlatestmess = asyncHandler(async (req, res) => {
+    const studentId = req.Student._id;
+
+    const result = await Student.aggregate([
+        { $match: { _id: studentId } },
+        { $unwind: { path: "$message", preserveNullAndEmptyArrays: true } }, // in case no messages
+        { $sort: { "message.date": -1 } },
+        { $group: { _id: "$_id", messages: { $push: "$message" } } }
+    ]);
+
+    const messages = result[0]?.messages || []; // avoid undefined
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, messages, "Latest messages fetched successfully."));
+});
+
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body
+
+
+
+    const user = await Student.findById(req.Student?._id)
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid old password")
+    }
+
+    user.password = newPassword
+    await user.save({ validateBeforeSave: false })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Password changed successfully"))
+})
+
+const updateStudentAvatar = asyncHandler(async (req, res) => {
+
+    const avatarLocalPath = req.file?.path;
+
+    if (!avatarLocalPath) {
+        throw new ApiError(400, "Avatar file is missing");
+    }
+
+    const user = await Student.findById(req.Student._id);
+
+    // ✅ Step 2: Upload new avatar
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+
+    if (!avatar?.url) {
+        throw new ApiError(400, "Error while uploading avatar");
+    }
+
+    // ✅ Step 3: Update DB with new avatar info
+    user.avatar = {
+        url: avatar.url,
+        public_id: avatar.public_id,
+    };
+    await user.save();
+
+    const updatedUser = await Student.findById(req.Student._id).select("-password");
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, updatedUser, "Avatar image updated successfully"));
+
+})
+
+const allAdmittedStudent = asyncHandler(async (req, res) => {
+    const findstudent = await Student.find({isverified:true}).select("-password");
+    const studentNum = findstudent.length;
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, { students: findstudent, studentNum }, "Total admitted students fetched successfully"));
+});
+
+const allUnAdmittedStudent = asyncHandler(async (req, res) => {
+    const findstudent = await Student.find({isverified:false}).select("-password"); 
+    const studentNum = findstudent.length;
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, { students: findstudent, studentNum }, "Total admitted students fetched successfully"));
+});
+
+const allDeptStudent = asyncHandler(async (req, res) => {
+    const dept = req.params.dept; 
+    if (!dept) throw new ApiError(400, "Dept must be provided for filter");
+
+    const students = await Student.aggregate([
+        { $match: { isverified: true, stream: dept } }
+    ]);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, students, "All students with this department fetched successfully"));
+});
+
+//filter by course
+const allStudentBycourse = asyncHandler(async (req, res) => {
+    const course = req.params.course; 
+    if (!course) throw new ApiError(400, "course must be provided for filter");
+
+    const students = await Student.aggregate([
+        { $match: { isverified: true, course: course } } 
+    ]);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, students, "All students with this course fetched successfully"));
+});
+
+//filter by sem
+const allStudentBysem = asyncHandler(async (req, res) => {
+    const sem = req.params.sem; 
+    if (!sem) throw new ApiError(400, "sem must be provided for filter");
+
+    const students = await Student.aggregate([
+        { $match: { isverified: true, sem: sem } }
+    ]);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, students, "All students with this sem fetched successfully"));
+});
+
+
+export { registerStudent, loginStudent, logoutStudent, getCurrentUser, getlatestmess, changeCurrentPassword,
+    allAdmittedStudent,allUnAdmittedStudent, updateStudentAvatar,allStudentBysem,allStudentBycourse,allDeptStudent }
 
