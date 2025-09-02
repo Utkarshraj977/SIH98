@@ -18,8 +18,10 @@ import adminRouter from './routes/admin.routes.js'
 import  studentRouter  from "./routes/student.routes.js"
 import administrativeOfficer from './routes/administrativeOfficer.routes.js'
 import feeSection from './routes/feeSection.routes.js'
+import teacherRouter from './routes/teacher.routes.js'
 app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/administrativeOfficer", administrativeOfficer)
 app.use("/api/v1/feeSection", feeSection)
 app.use("/api/v1/student",studentRouter)
+app.use("/api/v1/teacher",teacherRouter)
 export {app}

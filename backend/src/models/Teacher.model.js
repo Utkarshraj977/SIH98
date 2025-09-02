@@ -89,42 +89,42 @@ const TeacherSchema = new Schema(
     }
 )
 
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
+    TeacherSchema.pre("save", async function (next) {
+        if (!this.isModified("password")) return next();
 
-    this.password = await bcrypt.hash(this.password, 10)
-    next()
-})
+        this.password = await bcrypt.hash(this.password, 10)
+        next()
+    })
 
-userSchema.methods.isPasswordCorrect = async function (password) {
-    return await bcrypt.compare(password, this.password)
-}
+    TeacherSchema.methods.isPasswordCorrect = async function (password) {
+        return await bcrypt.compare(password, this.password)
+    }
 
-userSchema.methods.generateAccessToken = function () {
-    return jwt.sign(
-        {
-            _id: this._id,
-            email: this.email,
-            phone: this.phone,
-            collegeCode: this.collegeCode
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
-        }
-    )
-}
-userSchema.methods.generateRefreshToken = function () {
-    return jwt.sign(
-        {
-            _id: this._id,
+    TeacherSchema.methods.generateAccessToken = function () {
+        return jwt.sign(
+            {
+                _id: this._id,
+                email: this.email,
+                phone: this.phone,
+                collegeCode: this.collegeCode
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+            }
+        )
+    }
+    TeacherSchema.methods.generateRefreshToken = function () {
+        return jwt.sign(
+            {
+                _id: this._id,
 
-        },
-        process.env.REFRESH_TOKEN_SECRET,
-        {
-            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
-        }
-    )
-}
+            },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+            }
+        )
+    }
 
 export const Teacher = mongoose.model("Teacher", TeacherSchema)
