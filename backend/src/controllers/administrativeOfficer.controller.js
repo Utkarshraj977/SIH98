@@ -4,6 +4,7 @@ import { Administrative } from "../models/Administrative.models.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Admin } from "../models/Admin.model.js";
+import { Fee_section } from "../models/feeSection.model.js"
 // import { Student } from "../models/Student.model.js";
 
 
@@ -27,11 +28,11 @@ const generateAccessAndRefereshTokens = async (userId) => {
 
 
 const administrativeOfficer = asyncHandler(async (req, res) => {
-  const { name, email, phone, bloodgroup, address, experience, password ,college_code} = req.body;
+  const { name, email, phone, bloodgroup, address, experience, password, college_code } = req.body;
 
 
   if (
-    [name, email, phone, bloodgroup, address, experience, password,college_code].some(
+    [name, email, phone, bloodgroup, address, experience, password, college_code].some(
       (field) => typeof field !== "string" || field.trim() === ""
     )
   ) {
@@ -39,7 +40,7 @@ const administrativeOfficer = asyncHandler(async (req, res) => {
   }
 
   const existedAdmin = await Administrative.findOne({
-    $or: [ { email }, { phone }],
+    $or: [{ email }, { phone }],
   });
   if (existedAdmin) {
     throw new ApiError(409, "AdministrativeOfficer with email or collegeCode already exists");
@@ -67,7 +68,7 @@ const administrativeOfficer = asyncHandler(async (req, res) => {
 
   // Admin create
   const created = await Administrative.create({
-  name, email, phone, bloodgroup, address, experience, password,college_code,
+    name, email, phone, bloodgroup, address, experience, password, college_code,
     avatar: {
       url: avatar?.url || "",
       public_id: avatar?.public_id || "",
@@ -101,7 +102,7 @@ const loginAdministrativeofficer = asyncHandler(async (req, res) => {
 
   const { email, password } = req.body
 
-  if ( !email && !password) {
+  if (!email && !password) {
     throw new ApiError(400, "username or email is required")
   }
 
@@ -201,7 +202,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { name, email, phone, bloodgroup, address, experience } = req.body
 
-  if (!name && !email && !phone && !experience && !address && !bloodgroup ) {
+  if (!name && !email && !phone && !experience && !address && !bloodgroup) {
     throw new ApiError(400, "atleast one fields is required")
   }
 
@@ -209,7 +210,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     req.Administrative?._id,
     {
       $set: {
-        name, email, phone, bloodgroup, address, experience 
+        name, email, phone, bloodgroup, address, experience
       }
     },
     { new: true }
@@ -286,8 +287,23 @@ const preReg_Administrativeofficer = asyncHandler(async (req, res) => {
   );
 });
 
+const verifyStudent = asyncHandler(async (req, res) => {
+  
+  const administrative_officer = await Administrative.findById(req.Administrative?._id);
+  if(!administrative_officer) throw new ApiError(404,"Administrative Officer not found");
 
+  const feeadmin = await Fee_section.findOneAndUpdate(
+    { "collegeCode": administrative_officer.college_code},
+    { $addToSet: { AllStudent: administrative_officer } },
+    { new: true }
+  );
+  if(!feeadmin) throw new ApiError(400,"Data is not send to the feeadmin Officer.");
+  return res
+       .status(200)
+       .json(new ApiResponse(200,{},"student is verify and send to fee_section."))
+})
 
-export {administrativeOfficer,loginAdministrativeofficer,logoutAdministrativeofficer,changeCurrentPassword,
-    updateAccountDetails,updateAdminAvatar,preReg_Administrativeofficer
+export {
+  administrativeOfficer, loginAdministrativeofficer, logoutAdministrativeofficer, changeCurrentPassword,
+  updateAccountDetails, updateAdminAvatar, preReg_Administrativeofficer,verifyStudent
 }

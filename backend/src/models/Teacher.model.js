@@ -70,7 +70,7 @@ const TeacherSchema = new Schema(
                 required: false     // ✅ make optional
             }
         },
-        AllStudent:[
+        AllStudent: [
             {
                 type: Schema.Types.Mixed,
                 ref: "Student"
@@ -80,6 +80,12 @@ const TeacherSchema = new Schema(
             type: String,
             required: [true, 'Password is required']
         },
+        message: [
+            {
+                type: String,
+                date: { type: Date, default: Date.now }   // store timestamp for filtering
+            }
+        ],
         refreshToken: {
             type: String
         },
@@ -89,42 +95,42 @@ const TeacherSchema = new Schema(
     }
 )
 
-    TeacherSchema.pre("save", async function (next) {
-        if (!this.isModified("password")) return next();
+TeacherSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
 
-        this.password = await bcrypt.hash(this.password, 10)
-        next()
-    })
+    this.password = await bcrypt.hash(this.password, 10)
+    next()
+})
 
-    TeacherSchema.methods.isPasswordCorrect = async function (password) {
-        return await bcrypt.compare(password, this.password)
-    }
+TeacherSchema.methods.isPasswordCorrect = async function (password) {
+    return await bcrypt.compare(password, this.password)
+}
 
-    TeacherSchema.methods.generateAccessToken = function () {
-        return jwt.sign(
-            {
-                _id: this._id,
-                email: this.email,
-                phone: this.phone,
-                collegeCode: this.collegeCode
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            {
-                expiresIn: process.env.ACCESS_TOKEN_EXPIRY
-            }
-        )
-    }
-    TeacherSchema.methods.generateRefreshToken = function () {
-        return jwt.sign(
-            {
-                _id: this._id,
+TeacherSchema.methods.generateAccessToken = function () {
+    return jwt.sign(
+        {
+            _id: this._id,
+            email: this.email,
+            phone: this.phone,
+            collegeCode: this.collegeCode
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+    )
+}
+TeacherSchema.methods.generateRefreshToken = function () {
+    return jwt.sign(
+        {
+            _id: this._id,
 
-            },
-            process.env.REFRESH_TOKEN_SECRET,
-            {
-                expiresIn: process.env.REFRESH_TOKEN_EXPIRY
-            }
-        )
-    }
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
 
 export const Teacher = mongoose.model("Teacher", TeacherSchema)

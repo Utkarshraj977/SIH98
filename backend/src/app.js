@@ -24,4 +24,6 @@ app.use("/api/v1/administrativeOfficer", administrativeOfficer)
 app.use("/api/v1/feeSection", feeSection)
 app.use("/api/v1/student",studentRouter)
 app.use("/api/v1/teacher",teacherRouter)
+
 export {app}
+

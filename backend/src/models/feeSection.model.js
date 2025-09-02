@@ -68,6 +68,12 @@ const fee_sectionSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    message: [
+      {
+        type: String,
+        date: { type: Date, default: Date.now }   // store timestamp for filtering
+      }
+    ],
     refreshToken: {
       type: String,
     },

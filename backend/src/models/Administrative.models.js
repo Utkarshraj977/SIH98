@@ -72,6 +72,12 @@ const administrativeSchema = new Schema(
             type: String,
             required: true,
         },
+        message: [
+            {
+                type: String,
+                date: { type: Date, default: Date.now }   // store timestamp for filtering
+            }
+        ],
         AllStudent: [
             {
                 type: Schema.Types.Mixed,
