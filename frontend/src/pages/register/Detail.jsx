@@ -29,7 +29,7 @@ function Detail() {
 
   return (
 <div className="app-container">
-      <h1 className="form-title">Admin Registration Form</h1>
+      <h1 className="form-title text-black font-bold">Admin Registration Form</h1>
       <p className="form-subtitle">Complete your profile and college information</p>
 
       <form className="form-grid">
