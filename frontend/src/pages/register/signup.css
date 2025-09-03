@@ -2,8 +2,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f0f0f;
-  color: #fff;
+  background: #f5efef;
+  color: black;
 }
 
 .app-container {
@@ -26,7 +26,8 @@ body {
   text-align: center;
   margin-bottom: 30px;
   font-size: 16px;
-  color: #ccc;
+  color: #af0b0b;
+  font-weight: bold;
 }
 
 .form-grid {
@@ -39,10 +40,12 @@ body {
   background: #1e293b;
   padding: 20px;
   border-radius: 10px;
+  background-color: #eed6d6;
 }
 
 .form-section.right {
   background: #3d2f2f;
+  background: #C9CDCF;
 }
 
 .form-section.bottom {
@@ -54,6 +57,7 @@ body {
   font-size: 18px;
   border-bottom: 2px solid #06b6d4;
   padding-bottom: 5px;
+  
 }
 
 .form-row {
@@ -73,6 +77,8 @@ body {
 .form-group label {
   font-size: 14px;
   margin-bottom: 5px;
+  font-weight: bold;
+  
 }
 
 input,
@@ -80,8 +86,9 @@ select {
   padding: 10px;
   border-radius: 5px;
   border: none;
-  background: #111;
-  color: white;
+  background:white;
+  border: 1px solid black;
+  color: black;
   width: 100%; /* 👈 responsive input */
   box-sizing: border-box;
 }
@@ -99,13 +106,15 @@ input[readonly] {
 }
 
 .upload-box {
-  border: 2px dashed #666;
+  border: 2px dashed #978989;
   border-radius: 10px;
   padding: 20px;
   text-align: center;
   cursor: pointer;
   position: relative;
   background: #111;
+  background-color: white;
+  
 }
 
 .upload-box input {
