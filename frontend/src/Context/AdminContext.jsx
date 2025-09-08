@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 export const AdminContext = createContext();
 
 const AdminProvider = ({ children }) => {
-  const [token, setToken] = useState(true);
+  const [token, setToken] = useState(false);
 
   return (
     <AdminContext.Provider value={{ token, setToken }}>

@@ -9,6 +9,9 @@ import Contact from "../pages/Contact/Contact";
 import Register from "../pages/register/Register";
 import Login from "../pages/register/Login";
 
+import AdministratorLogin from "../pages/Adminstrator/AdministrtorLogin";
+
+import Registration from "../pages/Adminstrator/Registration";
 import AdminDashboard from "../pages/AdminDashBoard/AdminDashBoard";
 const Router = createBrowserRouter([
     {
@@ -47,6 +50,15 @@ const Router = createBrowserRouter([
                       </AdminRoute>
                 )
             },
+            {
+                path:"administrator-reg",
+                element: <Registration/>
+            },
+            {
+                path:"administrator-login",
+                element: <AdministratorLogin/>
+            }
+
         ]
     }
 ])
