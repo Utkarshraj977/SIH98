@@ -10,6 +10,12 @@ import Register from "../pages/register/Register";
 import Login from "../pages/register/Login";
 
 import AdminDashboard from "../pages/AdminDashBoard/AdminDashBoard";
+import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
+import StudentRegister from "../pages/StudentDashboard/StudentRegister"; 
+import Staff from "../pages/Staff/Staff";
+import TeacherDashboard from "../pages/Teacher/TeacherDashboard";
+
+
 const Router = createBrowserRouter([
     {
         path: "/",
@@ -47,6 +53,25 @@ const Router = createBrowserRouter([
                       </AdminRoute>
                 )
             },
+                    {
+                path: "student-register",     
+                element: <StudentRegister />,
+            },
+            {
+                path: "student-dash",
+                element: <StudentDashboard />
+                },
+            {
+                path: "staff",
+                element: <Staff/>
+                },
+             
+            {
+                path: "teacher-dash",
+                element: <TeacherDashboard />
+            },
+    
+
         ]
     }
 ])
