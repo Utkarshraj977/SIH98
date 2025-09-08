@@ -181,7 +181,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
   if (!phone && !email && !password) {
     throw new ApiError(400, "username or email is required")
   }
-
+  console.log(email)
   const user = await Admin.findOne({
     $or: [{ password }, { email }]
   })

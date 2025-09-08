@@ -9,9 +9,12 @@ import Contact from "../pages/Contact/Contact";
 import Register from "../pages/register/Register";
 import Login from "../pages/register/Login";
 
+import AdministratorLogin from "../pages/Adminstrator/AdministrtorLogin";
+
+import Registration from "../pages/Adminstrator/Registration";
 import AdminDashboard from "../pages/AdminDashBoard/AdminDashBoard";
 import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
-import StudentRegister from "../pages/StudentDashboard/StudentRegister"; 
+import StudentRegister from "../pages/StudentDashboard/StudentRegister";
 import Staff from "../pages/Staff/Staff";
 import TeacherDashboard from "../pages/Teacher/TeacherDashboard";
 
@@ -19,19 +22,20 @@ import TeacherDashboard from "../pages/Teacher/TeacherDashboard";
 const Router = createBrowserRouter([
     {
         path: "/",
-        element: <Layout/>,
+        element: <Layout />,
         children: [
-            {   index:true,
+            {
+                index: true,
                 path: "/",
-                element: <Home/>
+                element: <Home />
             },
             {
                 path: "about",
-                element: <About/>
+                element: <About />
             },
             {
                 path: "contact",
-                element: <Contact/>
+                element: <Contact />
             },
             // {
             //     path: "signup",
@@ -39,38 +43,49 @@ const Router = createBrowserRouter([
             // },
             {
                 path: "admin-register",
-                element: <Register/>
+                element: <Register />
             },
-             {
+            {
                 path: "admin-login",
-                element: <Login/>
+                element: <Login />
             },
             {
                 path: "admin-dash",
                 element: (
-                      <AdminRoute>
-                         <AdminDashboard/>
-                      </AdminRoute>
+                    <AdminRoute>
+                        <AdminDashboard />
+                    </AdminRoute>
                 )
             },
-                    {
-                path: "student-register",     
+
+            {
+                path: "student-register",
                 element: <StudentRegister />,
             },
             {
                 path: "student-dash",
                 element: <StudentDashboard />
-                },
+            },
             {
                 path: "staff",
-                element: <Staff/>
-                },
-             
+                element: <Staff />
+            },
+
             {
                 path: "teacher-dash",
                 element: <TeacherDashboard />
             },
-    
+
+
+            {
+                path: "administrator-reg",
+                element: <Registration />
+            },
+            {
+                path: "administrator-login",
+                element: <AdministratorLogin />
+            }
+
 
         ]
     }
