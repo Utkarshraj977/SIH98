@@ -1,9 +1,11 @@
 import React from "react";
 import { FaChalkboardTeacher, FaUserTie, FaMoneyBillWave, FaHotel, FaBook } from "react-icons/fa";
 import "./Staff.css";
-
+import { useNavigate } from "react-router-dom";
 const staffData = [
-  {
+   
+  
+{
     id: 1,
     role: "Teacher",
     icon: <FaChalkboardTeacher />,
@@ -13,7 +15,7 @@ const staffData = [
   },
   {
     id: 2,
-    role: "Administrative",
+    role: "Administrator",
     icon: <FaUserTie />,
     desc: "Handles office management, student records, and ensures smooth operation of the institution.",
     className: "admin",
@@ -45,7 +47,22 @@ const staffData = [
   }
 ];
 
+
 const Staff = () => {
+   const navigate = useNavigate();
+
+const handleRoute = (role)=>{
+    if(role === "Teacher")
+        navigate("/teacher-reg");
+    if(role === "Administrator")
+        navigate("/administrator-reg");
+    if(role === "Hostel Management")
+        navigate("/");
+    if(role === "Librarian")
+        navigate("/");
+    if(role === "Fees Section")
+        navigate("/fee-reg");
+}
   return (
     <div className="staff-page">
       <h1 className="staff-title">Our Staffs</h1>
@@ -55,6 +72,7 @@ const Staff = () => {
             key={staff.id}
             className={`staff-card ${staff.className}`}
             style={{ animationDelay: staff.delay }}
+            onClick={()=>handleRoute(staff.role)}
           >
             <div className="icon">{staff.icon}</div>
             <h2 className="role-name">{staff.role}</h2>

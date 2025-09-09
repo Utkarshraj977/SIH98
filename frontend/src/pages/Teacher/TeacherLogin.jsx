@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "./AdministratorLogin.css";
+import "./TeacherLogin.css";
 import { useNavigate } from "react-router-dom";
-function AdministratorLogin() {
+import TeacherRegister from "./TeacherRegister";
+function TeacherLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -65,11 +66,11 @@ function AdministratorLogin() {
           <button type="submit" className="submit-btn">Login</button>
           
           {message && <p className="message">{message}</p>}
-          <div className="text-center"> <p>already have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/administrator-reg")}>Signup</span></p></div>
+          <div className="text-center"> <p>already have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/teacher-reg")}>Signup</span></p></div>
         </form>
       </div>
     </div>
   );
 }
 
-export default AdministratorLogin;
+export default TeacherLogin;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./dashboard.css";
+import "./FeeDashboard.css";
 
-export default function FeePortalDashboard() {
+export default function FeeDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth > 900);
