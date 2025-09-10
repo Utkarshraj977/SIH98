@@ -254,8 +254,6 @@ const logoutAdmin = asyncHandler(async (req, res) => {
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body
 
-
-
   const user = await Admin.findById(req.Admin?._id)
   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
 

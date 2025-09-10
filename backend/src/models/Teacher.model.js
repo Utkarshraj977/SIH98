@@ -89,6 +89,13 @@ const TeacherSchema = new Schema(
         refreshToken: {
             type: String
         },
+
+        message: [
+            {
+                type: String,
+                date: { type: Date, default: Date.now }   // store timestamp for filtering
+            }
+        ],
     },
     {
         timestamps: true

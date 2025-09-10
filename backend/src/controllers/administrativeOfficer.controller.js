@@ -7,8 +7,6 @@ import { Admin } from "../models/Admin.model.js";
 import { Fee_section } from "../models/feeSection.model.js"
 // import { Student } from "../models/Student.model.js";
 
-
-
 const generateAccessAndRefereshTokens = async (userId) => {
   try {
     const user = await Administrative.findById(userId)
@@ -25,7 +23,6 @@ const generateAccessAndRefereshTokens = async (userId) => {
     throw new ApiError(500, "Something went wrong while generating referesh and access token")
   }
 }
-
 
 const administrativeOfficer = asyncHandler(async (req, res) => {
   const { name, email, phone, bloodgroup, address, experience, password, college_code } = req.body;
@@ -150,7 +147,6 @@ const loginAdministrativeofficer = asyncHandler(async (req, res) => {
 
 })
 
-
 const logoutAdministrativeofficer = asyncHandler(async (req, res) => {
   await Administrative.findByIdAndUpdate(
     req.Administrative._id,
@@ -176,7 +172,6 @@ const logoutAdministrativeofficer = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Administrativeofficer logged Out"))
 })
 
-
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body
 
@@ -197,7 +192,6 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "Password changed successfully"))
 })
-
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { name, email, phone, bloodgroup, address, experience } = req.body
@@ -259,13 +253,12 @@ const updateAdminAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedUser, "Avatar image updated successfully"));
 });
 
-
 const preReg_Administrativeofficer = asyncHandler(async (req, res) => {
-  let { administrativecode } = req.body;
+  let { administrativecode,collegeCode } = req.body;
 
-  console.log("Incoming Code:", administrativecode);
 
-  const allAdmins = await Admin.find();
+
+  const allAdmins = await Admin.find({"collegeCode":collegeCode});
   console.log("All Admin Records:", JSON.stringify(allAdmins, null, 2));
 
   const findAdministorOfficer = await Admin.findOne({
@@ -287,6 +280,7 @@ const preReg_Administrativeofficer = asyncHandler(async (req, res) => {
   );
 });
 
+<<<<<<< HEAD
 const verifyStudent = asyncHandler(async (req, res) => {
   
   const administrative_officer = await Administrative.findById(req.Administrative?._id);
@@ -306,4 +300,8 @@ const verifyStudent = asyncHandler(async (req, res) => {
 export {
   administrativeOfficer, loginAdministrativeofficer, logoutAdministrativeofficer, changeCurrentPassword,
   updateAccountDetails, updateAdminAvatar, preReg_Administrativeofficer,verifyStudent
+=======
+export {administrativeOfficer,loginAdministrativeofficer,logoutAdministrativeofficer,changeCurrentPassword,
+    updateAccountDetails,updateAdminAvatar,preReg_Administrativeofficer
+>>>>>>> origin/hostlib
 }

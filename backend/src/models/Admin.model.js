@@ -132,15 +132,24 @@ const adminSchema = new Schema(
     ],
 
     staff_selection_id: {
+
       administrativecode: { type: String, default: "726800" },
       Teacher: { type: String, default: "726800" },
       student: { type: String, default: "234567" },
       fee_section: { type: String, default: "5684525" },
     },
 
+    administrativecode: { type: String, default: "726800" },
+    Teacher: { type: String, default: "726800" },
+    student: { type: String, default: "234567" },
+    fee_section: { type: String, default: "5684525" },
+    hostel: { type: String, default: "5684525" },
   },
-  {
-    timestamps: true,
+
+
+  
+{
+  timestamps: true,
   }
 );
 

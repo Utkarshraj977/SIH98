@@ -49,8 +49,8 @@ router.route("/update-college-certificate").patch(verifyJWT, upload.fields([
     { name: "AICTE", maxCount: 1 },
     { name: "NAAC", maxCount: 1 },
     { name: "NBA", maxCount: 1 },
-])
-    , updateCollegeCertificate)
+]) , updateCollegeCertificate )
 
 export default router
+
 

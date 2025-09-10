@@ -6,6 +6,7 @@ import { Student } from "../models/Student.model.js";
 import { Teacher } from "../models/Teacher.model.js";
 import { Administrative } from "../models/Administrative.models.js";
 import { Fee_section } from "../models/feeSection.model.js";
+import { Hostel } from "../models/hostel.model.js";
 // import { Fee_section } from "../models/feeSection.model.js";
 export const verifyJWT = asyncHandler(async (req, _, next) => {
     try {
@@ -143,5 +144,30 @@ export const verifyJWT3 = asyncHandler(async (req, _, next) => {
         throw new ApiError(401, error?.message || "Invalid access token")
     }
 
+})
+
+export const verifyJWT4 = asyncHandler(async (req, _, next) => {
+    try {
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
+
+        // console.log(token);
+        if (!token) {
+            throw new ApiError(401, "Unauthorized request")
+        }
+
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+
+        const Adminn = await Hostel.findById(decodedToken?._id).select("-password -refreshToken")
+
+        if (!Adminn) {
+
+            throw new ApiError(401, "Invalid Access Token")
+        }
+
+        req.Hostel = Adminn;
+        next()
+    } catch (error) {
+        throw new ApiError(401, error?.message || "Invalid access token")
+    }
 })
 

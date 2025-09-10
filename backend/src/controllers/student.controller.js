@@ -4,6 +4,10 @@ import { Student } from "../models/Student.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Administrative } from "../models/Administrative.models.js";
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/hostlib
 
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
@@ -142,6 +146,7 @@ const registerStudent = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong while registering the Student");
     }
 
+<<<<<<< HEAD
     const administrativeUser = await Administrative.findOneAndUpdate(
         { "college_code": createdstudent.collegeCode },
         { $addToSet: { AllStudent: createdstudent } },
@@ -150,6 +155,23 @@ const registerStudent = asyncHandler(async (req, res) => {
 
 
     if (!administrativeUser) throw new ApiError(400, "student is not set into administrative ooficer")
+=======
+    // add id
+    // const studentdata = await Student.findById(req.Student._id).select(
+    //     "-password -refreshToken -__v"
+    // );
+    // if (!studentdata) {
+    //     throw new ApiError(404, "student not found");
+    // }
+
+
+    const administrativeUser = await Administrative.findOneAndUpdate(
+        { "college_code": req.Student.collegeCode },
+        { $addToSet: { AllStudent: created._id } },
+        { new: true }
+    );
+    if(!administrativeUser) throw new ApiError(400,"student is not set into administrative ooficer")
+>>>>>>> origin/hostlib
 
     return res
         .status(201)
@@ -379,7 +401,10 @@ const allStudentBysem = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, students, "All students with this sem fetched successfully"));
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/hostlib
 export {
     registerStudent, loginStudent, logoutStudent, getCurrentUser, getlatestmess, changeCurrentPassword,
     allAdmittedStudent, allUnAdmittedStudent, updateStudentAvatar, allStudentBysem, allStudentBycourse, allDeptStudent

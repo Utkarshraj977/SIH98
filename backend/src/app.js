@@ -19,11 +19,16 @@ import  studentRouter  from "./routes/student.routes.js"
 import administrativeOfficer from './routes/administrativeOfficer.routes.js'
 import feeSection from './routes/feeSection.routes.js'
 import teacherRouter from './routes/teacher.routes.js'
+import hostelRouter from './routes/hostel.routes.js'
+import otpRouter from './routes/otp.routes.js'
 app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/administrativeOfficer", administrativeOfficer)
 app.use("/api/v1/feeSection", feeSection)
 app.use("/api/v1/student",studentRouter)
 app.use("/api/v1/teacher",teacherRouter)
+
+app.use("/api/v1/hostel",hostelRouter)
+app.use("/api/v1/otp",otpRouter)
 
 export {app}
 
