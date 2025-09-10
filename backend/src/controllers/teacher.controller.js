@@ -281,7 +281,55 @@ const updateAdminAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedUser, "Avatar image updated successfully"));
 });
 
+const getlatestmess = asyncHandler(async (req, res) => {
+    const teacherId = req.Teacher._id;
+
+    const result = await Teacher.aggregate([
+        { $match: { _id: teacherId } },
+        { $unwind: { path: "$message", preserveNullAndEmptyArrays: true } }, // in case no messages
+        { $sort: { "message.date": -1 } },
+        { $group: { _id: "$_id", messages: { $push: "$message" } } }
+    ]);
+
+    const messages = result[0]?.messages || []; // avoid undefined
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, messages, "Latest messages fetched successfully."));
+});
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+
+    return res
+        .status(200)
+        .json(new ApiResponse(
+            200,
+            req.Teacher,
+            "Teacher User fetched successfully"
+        ))
+})
+
+const getCurrentUserPara = asyncHandler(async (req, res) => {
+    const id =req.params.id;
+    if(!id){
+        throw new ApiError(400, "id is not found");
+    }
+    const currentTeacher = await Teacher.find({_id : id })
+    if(!currentTeacher) {
+        throw new ApiError(400, "currentTeacher is not found");
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(
+            200,
+            currentTeacher,
+            "Teacher User fetched successfully"
+        ))
+})
+
 
 export {preReg_teacher,TeacherReg,loginTeacher,logoutTeacher,changeCurrentPassword,
-    updateAccountDetails,updateAdminAvatar
+    updateAccountDetails,updateAdminAvatar,getlatestmess,getCurrentUser,
+    getCurrentUserPara
 }

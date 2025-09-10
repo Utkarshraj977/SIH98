@@ -3,6 +3,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { Student } from "../models/Student.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { Administrative } from "../models/Administrative.models.js";
+
 
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
@@ -140,6 +142,22 @@ const registerStudent = asyncHandler(async (req, res) => {
     if (!createdstudent) {
         throw new ApiError(500, "Something went wrong while registering the Student");
     }
+
+    // add id
+    // const studentdata = await Student.findById(req.Student._id).select(
+    //     "-password -refreshToken -__v"
+    // );
+    // if (!studentdata) {
+    //     throw new ApiError(404, "student not found");
+    // }
+
+
+    const administrativeUser = await Administrative.findOneAndUpdate(
+        { "college_code": req.Student.collegeCode },
+        { $addToSet: { AllStudent: created._id } },
+        { new: true }
+    );
+    if(!administrativeUser) throw new ApiError(400,"student is not set into administrative ooficer")
 
     return res
         .status(201)
@@ -311,7 +329,7 @@ const updateStudentAvatar = asyncHandler(async (req, res) => {
 })
 
 const allAdmittedStudent = asyncHandler(async (req, res) => {
-    const findstudent = await Student.find({isverified:true}).select("-password");
+    const findstudent = await Student.find({ isverified: true }).select("-password");
     const studentNum = findstudent.length;
 
     return res
@@ -320,7 +338,7 @@ const allAdmittedStudent = asyncHandler(async (req, res) => {
 });
 
 const allUnAdmittedStudent = asyncHandler(async (req, res) => {
-    const findstudent = await Student.find({isverified:false}).select("-password"); 
+    const findstudent = await Student.find({ isverified: false }).select("-password");
     const studentNum = findstudent.length;
 
     return res
@@ -329,7 +347,7 @@ const allUnAdmittedStudent = asyncHandler(async (req, res) => {
 });
 
 const allDeptStudent = asyncHandler(async (req, res) => {
-    const dept = req.params.dept; 
+    const dept = req.params.dept;
     if (!dept) throw new ApiError(400, "Dept must be provided for filter");
 
     const students = await Student.aggregate([
@@ -343,11 +361,11 @@ const allDeptStudent = asyncHandler(async (req, res) => {
 
 //filter by course
 const allStudentBycourse = asyncHandler(async (req, res) => {
-    const course = req.params.course; 
+    const course = req.params.course;
     if (!course) throw new ApiError(400, "course must be provided for filter");
 
     const students = await Student.aggregate([
-        { $match: { isverified: true, course: course } } 
+        { $match: { isverified: true, course: course } }
     ]);
 
     return res
@@ -357,7 +375,7 @@ const allStudentBycourse = asyncHandler(async (req, res) => {
 
 //filter by sem
 const allStudentBysem = asyncHandler(async (req, res) => {
-    const sem = req.params.sem; 
+    const sem = req.params.sem;
     if (!sem) throw new ApiError(400, "sem must be provided for filter");
 
     const students = await Student.aggregate([
@@ -369,7 +387,8 @@ const allStudentBysem = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, students, "All students with this sem fetched successfully"));
 });
 
-
-export { registerStudent, loginStudent, logoutStudent, getCurrentUser, getlatestmess, changeCurrentPassword,
-    allAdmittedStudent,allUnAdmittedStudent, updateStudentAvatar,allStudentBysem,allStudentBycourse,allDeptStudent }
+export {
+    registerStudent, loginStudent, logoutStudent, getCurrentUser, getlatestmess, changeCurrentPassword,
+    allAdmittedStudent, allUnAdmittedStudent, updateStudentAvatar, allStudentBysem, allStudentBycourse, allDeptStudent
+}
 

@@ -130,6 +130,7 @@ const adminSchema = new Schema(
     Teacher: { type: String, default: "726800" },
     student: { type: String, default: "234567" },
     fee_section: { type: String, default: "5684525" },
+    hostel: { type: String, default: "5684525" },
   },
 
   },
