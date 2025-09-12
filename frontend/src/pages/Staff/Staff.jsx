@@ -61,7 +61,7 @@ const handleRoute = (role)=>{
     if(role === "Librarian")
         navigate("/");
     if(role === "Fees Section")
-        navigate("/fee-reg");
+        navigate("/fee-register");
 }
   return (
     <div className="staff-page">

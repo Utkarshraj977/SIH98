@@ -23,6 +23,12 @@ import TeacherLogin from "../pages/Teacher/TeacherLogin";
 import TeacherRegister from "../pages/Teacher/TeacherRegister";
 
 import FeeDashboard from "../pages/fee_section/FeeDashboard";
+import FacultyRegistration from "../pages/fee_section/Registers";
+import FeeLogin from "../pages/fee_section/FeeLogin";
+import HostelRegistration from "../pages/Hostel/HostelRegistrations";
+import HostelLogin from "../pages/Hostel/HostelLogins"; 
+import HostelDashboard from "../pages/Hostel/HostelDashboard";
+
 
 
 
@@ -108,11 +114,36 @@ const Router = createBrowserRouter([
                 path: "administrator-login",
                 element: <AdministratorLogin />
             },
+                    {
+            path: "fee-register",
+            element: <FacultyRegistration />
+            },
+            {
+                path: "fee-login",
+                element: <FeeLogin />
+                },
+
             
             {
                 path: "fee-dash",
                 element: <FeeDashboard />
+            },
+
+                        {
+            path: "hostel-register",
+            element: <HostelRegistration />
+            },
+                      {
+            path: "hostel-login",
+            element: <HostelLogin />
+            },
+             {
+            path: "hostel-dash",
+            element: <HostelDashboard />
             }
+
+
+
 
         ]
     }
