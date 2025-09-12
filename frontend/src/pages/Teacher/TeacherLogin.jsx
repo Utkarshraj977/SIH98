@@ -39,7 +39,7 @@ function TeacherLogin() {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h2>Admin Login</h2>
+        <h2 className="font-bold">Teacher Login</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email</label>
@@ -63,7 +63,13 @@ function TeacherLogin() {
             />
           </div>
 
-          <button type="submit" className="submit-btn">Login</button>
+          <button type="submit" className="submit-btn"
+          onClick={()=>{
+            if(password === '1234'){
+              navigate("/teacher-dash")
+            }
+          }}
+          >Login</button>
           
           {message && <p className="message">{message}</p>}
           <div className="text-center"> <p>already have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/teacher-reg")}>Signup</span></p></div>

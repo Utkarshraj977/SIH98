@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "./AdministratorLogin.css";
+import "./HostelLogin.css";
 import { useNavigate } from "react-router-dom";
-function AdministratorLogin() {
+//import HoatelRegister from "./TeacherRegister";
+function HostelLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -63,15 +64,19 @@ function AdministratorLogin() {
           </div>
 
           <button type="submit" className="submit-btn"
-         
+          onClick={()=>{
+            if(password === '1234'){
+              navigate("/hostel-dash")
+            }
+          }}
           >Login</button>
           
           {message && <p className="message">{message}</p>}
-          <div className="text-center"> <p>already have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/administrator-reg")}>signup</span></p></div>
+          <div className="text-center"> <p>dont have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/Hostel-reg")}>Signup</span></p></div>
         </form>
       </div>
     </div>
   );
 }
 
-export default AdministratorLogin;
+export default HostelLogin;

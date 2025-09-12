@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./StudentRegister.css";
-
+import { useNavigate } from "react-router-dom";
 const StudentRegister = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     // Personal & Family
@@ -308,6 +309,7 @@ const StudentRegister = () => {
             <div className="form-footer">
               <button type="button" className="submit-btn" onClick={prevStep}>Previous</button>
               <button type="submit" className="submit-btn" onClick={()=>navigate("student-dash")}>Submit</button>
+              <p>already have an account?<span className="font-bold" onClick={()=>navigate("/student-login")}>Login</span></p>
             </div>
           </div>
         )}

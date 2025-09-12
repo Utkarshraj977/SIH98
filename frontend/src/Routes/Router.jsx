@@ -15,6 +15,7 @@ import Registration from "../pages/Adminstrator/Registration";
 import AdminDashboard from "../pages/AdminDashBoard/AdminDashBoard";
 import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
 import StudentRegister from "../pages/StudentDashboard/StudentRegister";
+import StudentLogin from "../pages/StudentDashboard/StudentLogin";
 import Staff from "../pages/Staff/Staff";
 
 import TeacherDashboard from "../pages/Teacher/TeacherDashboard";
@@ -22,6 +23,11 @@ import TeacherLogin from "../pages/Teacher/TeacherLogin";
 import TeacherRegister from "../pages/Teacher/TeacherRegister";
 
 import FeeDashboard from "../pages/fee_section/FeeDashboard";
+
+
+
+
+
 const Router = createBrowserRouter([
     {
         path: "/",
@@ -55,9 +61,9 @@ const Router = createBrowserRouter([
             {
                 path: "admin-dash",
                 element: (
-                    <AdminRoute>
+                   
                         <AdminDashboard />
-                    </AdminRoute>
+                   
                 )
             },
 
@@ -65,6 +71,12 @@ const Router = createBrowserRouter([
                 path: "student-register",
                 element: <StudentRegister />,
             },
+
+             {
+                path: "student-login",
+                element: <StudentLogin />,
+            },
+
             {
                 path: "student-dash",
                 element: <StudentDashboard />

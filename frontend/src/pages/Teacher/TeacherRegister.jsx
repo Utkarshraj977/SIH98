@@ -188,7 +188,7 @@ const TeacherRegister = () => {
             Register
           </button>
           {message && <p className="message">{message}</p>}
-          <div className="text-center"> <p>already have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/teacher-login")}>Signup</span></p></div>
+          <div className="text-center"> <p>already have an account ? <span className="text-blue-800 cursor-pointer" onClick={()=>navigate("/teacher-login")}>Login</span></p></div>
         </form>
       </div>
     </div>
