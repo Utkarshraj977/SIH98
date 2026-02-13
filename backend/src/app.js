@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 //for test of github webhook
-const app = express()
+const app = express();
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
