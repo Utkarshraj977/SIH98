@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-//finally the last testing for github before deploy collabX project
+//first testing upon deployed backend
 
 const app = express();
 
